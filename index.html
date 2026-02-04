@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Юридическая компания "Защита"</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .services {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .service-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 25px;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .service-card h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .price {
+            color: #27ae60;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            background: #2980b9;
+        }
+        
+        .contact-form {
+            background: #f8f9fa;
+            padding: 40px 20px;
+            margin: 40px 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 40px auto;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <h1>Юридическая компания "Защита"</h1>
+        <p>Профессиональная юридическая помощь с 2010 года</p>
+    </header>
+
+    <!-- Услуги -->
+    <section class="services">
+        <div class="service-card">
+            <h3>Консультация юриста</h3>
+            <p>Разбор вашей ситуации, анализ документов, план действий</p>
+            <div class="price">3 000 ₽</div>
+            <button onclick="alert('Заявка на консультацию отправлена!')">Заказать</button>
+        </div>
+        
+        <div class="service-card">
+            <h3>Составление искового заявления</h3>
+            <p>Подготовка документов для подачи в суд</p>
+            <div class="price">5 000 ₽</div>
+            <button onclick="alert('Заявка на составление иска отправлена!')">Заказать</button>
+        </div>
+        
+        <div class="service-card">
+            <h3>Сопровождение в суде</h3>
+            <p>Представительство ваших интересов в судебных заседаниях</p>
+            <div class="price">15 000 ₽</div>
+            <button onclick="alert('Заявка на сопровождение отправлена!')">Заказать</button>
+        </div>
+    </section>
+
+    <!-- Форма связи -->
+    <section class="contact-form">
+        <h2 style="text-align: center; margin-bottom: 20px;">Оставить заявку</h2>
+        <input type="text" placeholder="Ваше имя" id="name">
+        <input type="tel" placeholder="Телефон" id="phone">
+        <textarea placeholder="Описание проблемы" rows="4" id="message"></textarea>
+        <button onclick="sendForm()">Отправить заявку</button>
+    </section>
+
+    <!-- Подвал -->
+    <footer>
+        <p>© 2024 Юридическая компания "Защита"</p>
+        <p>Телефон: +7 (495) 123-45-67 | Москва, ул. Юридическая, 15</p>
+    </footer>
+
+    <script>
+        function sendForm() {
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const message = document.getElementById('message').value;
+            
+            if (!name || !phone) {
+                alert('Заполните имя и телефон');
+                return;
+            }
+            
+            alert(`Заявка отправлена!\nИмя: ${name}\nТелефон: ${phone}\nПроблема: ${message}`);
+            
+            // Очищаем форму
+            document.getElementById('name').value = '';
+            document.getElementById('phone').value = '';
+            document.getElementById('message').value = '';
+        }
+    </script>
+</body>
+</html>
