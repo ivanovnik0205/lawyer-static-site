@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Юридическая компания "Защита"</title>
+    <title>Юридическая компания "Защита+"</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: Arial, sans-serif; line-height: 1.6; }
@@ -30,6 +30,11 @@
             padding: 25px;
             width: 300px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
         }
         
         .service-card h3 {
@@ -53,16 +58,17 @@
             cursor: pointer;
             width: 100%;
             font-size: 16px;
+            transition: background 0.3s, transform 0.2s;
         }
         
         button:hover {
             background: #2980b9;
+            transform: scale(1.05);
         }
         
         .contact-form {
             background: #f8f9fa;
             padding: 40px 20px;
-            margin: 40px 20px;
             border-radius: 10px;
             max-width: 600px;
             margin: 40px auto;
@@ -74,6 +80,13 @@
             margin: 10px 0;
             border: 1px solid #ddd;
             border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
         }
         
         footer {
@@ -82,6 +95,41 @@
             text-align: center;
             padding: 20px;
             margin-top: 40px;
+        }
+        
+        /* Стиль для ошибок */
+        .error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        /* Стиль для успешного сообщения */
+        .success-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 1000;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
         }
     </style>
 </head>
@@ -98,21 +146,28 @@
             <h3>Консультация юриста</h3>
             <p>Разбор вашей ситуации, анализ документов, план действий</p>
             <div class="price">3 000 ₽</div>
-            <button onclick="alert('Заявка на консультацию отправлена!')">Заказать</button>
+            <button onclick="orderService('Консультация юриста', 3000)">Заказать</button>
+        </div>
+
+        <div class="service-card">
+            <h3>Банкротство физических лиц</h3>
+            <p>Полное сопровождение процедуры банкротства</p>
+            <div class="price">25 000 ₽</div>
+            <button onclick="orderService('Банкротство физических лиц', 25000)">Заказать</button>
         </div>
         
         <div class="service-card">
             <h3>Составление искового заявления</h3>
             <p>Подготовка документов для подачи в суд</p>
             <div class="price">5 000 ₽</div>
-            <button onclick="alert('Заявка на составление иска отправлена!')">Заказать</button>
+            <button onclick="orderService('Составление искового заявления', 5000)">Заказать</button>
         </div>
         
         <div class="service-card">
             <h3>Сопровождение в суде</h3>
             <p>Представительство ваших интересов в судебных заседаниях</p>
             <div class="price">15 000 ₽</div>
-            <button onclick="alert('Заявка на сопровождение отправлена!')">Заказать</button>
+            <button onclick="orderService('Сопровождение в суде', 15000)">Заказать</button>
         </div>
     </section>
 
@@ -120,35 +175,188 @@
     <section class="contact-form">
         <h2 style="text-align: center; margin-bottom: 20px;">Оставить заявку</h2>
         <input type="text" placeholder="Ваше имя" id="name">
-        <input type="tel" placeholder="Телефон" id="phone">
+        <div id="name-error" class="error"></div>
+        
+        <input type="tel" placeholder="Телефон (например: 89991234567)" id="phone">
+        <div id="phone-error" class="error"></div>
+        
         <textarea placeholder="Описание проблемы" rows="4" id="message"></textarea>
-        <button onclick="sendForm()">Отправить заявку</button>
+        <div id="message-error" class="error"></div>
+        
+        <button onclick="validateAndSendForm()">Отправить заявку</button>
     </section>
 
     <!-- Подвал -->
     <footer>
-        <p>© 2024 Юридическая компания "Защита"</p>
+        <p id="footer-year">© 2024 Юридическая компания "Защита"</p>
         <p>Телефон: +7 (495) 123-45-67 | Москва, ул. Юридическая, 15</p>
+        <p id="counter">Заявок сегодня: <span id="request-count">0</span></p>
     </footer>
 
+    <!-- Модальное окно успеха -->
+    <div class="overlay" id="overlay"></div>
+    <div class="success-message" id="success-message">
+        <h3 style="color: #27ae60;">✅ Заявка отправлена!</h3>
+        <p>Наш юрист свяжется с вами в течение 15 минут</p>
+        <button onclick="closeSuccessMessage()" style="margin-top: 20px; padding: 10px 30px;">
+            Закрыть
+        </button>
+    </div>
+
     <script>
-        function sendForm() {
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
-            const message = document.getElementById('message').value;
-            
-            if (!name || !phone) {
-                alert('Заполните имя и телефон');
-                return;
+        // Простая проверка, что JS подключен
+        console.log('✅ Сайт юриста загружен! JavaScript работает!');
+        
+        // Меняем заголовок через JS
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.querySelector('.header h1');
+            if (header) {
+                header.innerHTML = 'Юридическая компания <span style="color:#3498db">"Защита+"</span>';
+                console.log('Заголовок изменён!');
             }
             
-            alert(`Заявка отправлена!\nИмя: ${name}\nТелефон: ${phone}\nПроблема: ${message}`);
+            // Обновляем год в футере
+            const yearElement = document.getElementById('footer-year');
+            if (yearElement) {
+                const currentYear = new Date().getFullYear();
+                yearElement.textContent = `© ${currentYear} Юридическая компания "Защита+"`;
+            }
+            
+            // Загружаем счётчик заявок
+            loadRequestCount();
+            
+            // Добавляем анимацию к карточкам
+            const cards = document.querySelectorAll('.service-card');
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.style.boxShadow = '0 10px 20px rgba(0,0,0,0.15)';
+                    setTimeout(() => {
+                        this.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+                    }, 300);
+                });
+            });
+            
+            console.log('Все обработчики настроены!');
+        });
+        
+        // Функция заказа услуги
+        function orderService(serviceName, price) {
+            console.log(`Заказ услуги: ${serviceName}, Цена: ${price} руб.`);
+            
+            // Показываем модальное окно
+            document.getElementById('success-message').innerHTML = `
+                <h3 style="color: #27ae60;">✅ Заявка на "${serviceName}" отправлена!</h3>
+                <p>Стоимость: <strong>${price.toLocaleString()} ₽</strong></p>
+                <p>Наш юрист свяжется с вами для уточнения деталей</p>
+                <button onclick="closeSuccessMessage()" style="margin-top: 20px; padding: 10px 30px;">
+                    Закрыть
+                </button>
+            `;
+            
+            showSuccessMessage();
+            incrementRequestCount();
+        }
+        
+        // Валидация и отправка формы
+        function validateAndSendForm() {
+            console.log('Проверка формы...');
+            
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            // Сбрасываем ошибки
+            document.querySelectorAll('.error').forEach(el => el.textContent = '');
+            
+            let isValid = true;
+            
+            // Проверка имени
+            if (name.length < 2) {
+                document.getElementById('name-error').textContent = 'Имя должно содержать минимум 2 символа';
+                isValid = false;
+            }
+            
+            // Проверка телефона (только цифры, 10-15 символов)
+            const phoneRegex = /^[\d\s\-\+\(\)]{10,15}$/;
+            if (!phoneRegex.test(phone.replace(/\D/g, ''))) {
+                document.getElementById('phone-error').textContent = 'Введите корректный номер телефона (10-15 цифр)';
+                isValid = false;
+            }
+            
+            // Проверка сообщения
+            if (message.length < 10) {
+                document.getElementById('message-error').textContent = 'Опишите проблему подробнее (минимум 10 символов)';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                console.log('Форма валидна! Отправляем...');
+                sendForm(name, phone, message);
+            } else {
+                console.log('Форма содержит ошибки');
+            }
+        }
+        
+        function sendForm(name, phone, message) {
+            // Здесь будет отправка на сервер
+            console.log('Данные формы:', { name, phone, message });
+            
+            // Показываем успешное сообщение
+            document.getElementById('success-message').innerHTML = `
+                <h3 style="color: #27ae60;">✅ Заявка отправлена!</h3>
+                <p><strong>Имя:</strong> ${name}</p>
+                <p><strong>Телефон:</strong> ${phone}</p>
+                <p><strong>Проблема:</strong> ${message.substring(0, 50)}${message.length > 50 ? '...' : ''}</p>
+                <button onclick="closeSuccessMessage()" style="margin-top: 20px; padding: 10px 30px;">
+                    Закрыть
+                </button>
+            `;
+            
+            showSuccessMessage();
+            incrementRequestCount();
             
             // Очищаем форму
             document.getElementById('name').value = '';
             document.getElementById('phone').value = '';
             document.getElementById('message').value = '';
         }
+        
+        // Работа с модальным окном
+        function showSuccessMessage() {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('success-message').style.display = 'block';
+        }
+        
+        function closeSuccessMessage() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('success-message').style.display = 'none';
+        }
+        
+        // Счётчик заявок (в LocalStorage)
+        function loadRequestCount() {
+            let count = localStorage.getItem('lawyerRequestCount') || 0;
+            document.getElementById('request-count').textContent = count;
+        }
+        
+        function incrementRequestCount() {
+            let count = parseInt(localStorage.getItem('lawyerRequestCount') || 0);
+            count++;
+            localStorage.setItem('lawyerRequestCount', count);
+            document.getElementById('request-count').textContent = count;
+            console.log(`Заявок сегодня: ${count}`);
+        }
+        
+        // Закрытие модального окна по клику на overlay
+        document.getElementById('overlay').addEventListener('click', closeSuccessMessage);
+        
+        // Закрытие по Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeSuccessMessage();
+            }
+        });
+        
+        console.log('JavaScript код загружен и готов!');
     </script>
 </body>
 </html>
