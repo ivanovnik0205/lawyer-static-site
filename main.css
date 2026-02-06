@@ -1,0 +1,104 @@
+/* css/main.css - Главный файл стилей */
+
+/* Импорт всех CSS модулей */
+@import url('reset.css');
+@import url('buttons.css');
+@import url('header.css');
+@import url('services.css');
+@import url('form.css');
+@import url('reviews.css');
+@import url('modal.css');
+@import url('footer.css');
+
+/* Глобальные переменные */
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2c3e50;
+    --accent-color: #27ae60;
+    --danger-color: #e74c3c;
+    --text-color: #333;
+    --light-bg: #f8f9fa;
+    --border-radius: 8px;
+    --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    --transition: all 0.3s ease;
+}
+
+/* Общие стили для всего сайта */
+body {
+    font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--light-bg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: var(--secondary-color);
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: var(--primary-color);
+    margin: 15px auto;
+    border-radius: 2px;
+}
+
+/* Утилитарные классы */
+.text-center { text-align: center; }
+.text-primary { color: var(--primary-color); }
+.text-success { color: var(--accent-color); }
+.text-danger { color: var(--danger-color); }
+.bg-light { background-color: var(--light-bg); }
+.mt-20 { margin-top: 20px; }
+.mt-40 { margin-top: 40px; }
+.mb-20 { margin-bottom: 20px; }
+.mb-40 { margin-bottom: 40px; }
+.p-20 { padding: 20px; }
+.p-40 { padding: 40px; }
+
+/* Анимации */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+}

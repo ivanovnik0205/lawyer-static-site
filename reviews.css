@@ -1,0 +1,146 @@
+/* reviews.css - Стили отзывов */
+.reviews {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    position: relative;
+}
+
+.reviews h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 50px;
+}
+
+.review-slider {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    background: white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.review {
+    padding: 40px;
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.review.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.review-text {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #555;
+    font-style: italic;
+    margin-bottom: 25px;
+    position: relative;
+    padding-left: 30px;
+}
+
+.review-text::before {
+    content: '"';
+    position: absolute;
+    left: 0;
+    top: -10px;
+    font-size: 4rem;
+    color: #3498db;
+    opacity: 0.3;
+    font-family: Georgia, serif;
+}
+
+.review-author {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.review-author-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #3498db;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.review-author-info h4 {
+    color: #2c3e50;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.review-author-info p {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+.slider-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.slider-counter {
+    font-size: 1.1rem;
+    color: #2c3e50;
+    font-weight: 600;
+    min-width: 60px;
+    text-align: center;
+}
+
+.slider-dots {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.slider-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #bdc3c7;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.slider-dot.active {
+    background: #3498db;
+    transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+    .reviews {
+        padding: 40px 15px;
+    }
+    
+    .reviews h2 {
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+    
+    .review {
+        padding: 30px 20px;
+    }
+    
+    .review-text {
+        font-size: 1.1rem;
+        padding-left: 25px;
+    }
+}

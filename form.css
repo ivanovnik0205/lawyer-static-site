@@ -1,0 +1,97 @@
+/* form.css - Стили форм */
+.contact-form {
+    background: #f8f9fa;
+    padding: 60px 20px;
+    border-radius: 15px;
+    margin: 60px auto;
+    max-width: 700px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+}
+
+.contact-form h2 {
+    text-align: center;
+    color: #2c3e50;
+    font-size: 2.2rem;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+    color: #333;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+.form-control::placeholder {
+    color: #95a5a6;
+}
+
+textarea.form-control {
+    min-height: 150px;
+    resize: vertical;
+    font-family: inherit;
+}
+
+.error {
+    color: #e74c3c;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.error::before {
+    content: '⚠';
+    font-size: 1rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .contact-form {
+        padding: 40px 15px;
+        margin: 40px 15px;
+    }
+    
+    .contact-form h2 {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    
+    .form-control {
+        padding: 12px 14px;
+    }
+}

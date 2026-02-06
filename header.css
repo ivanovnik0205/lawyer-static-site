@@ -1,0 +1,61 @@
+/* header.css - Стили шапки сайта */
+.header {
+    background: linear-gradient(135deg, #2c3e50 0%, #4a6491 100%);
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('../images/pattern.png') repeat;
+    opacity: 0.1;
+    pointer-events: none;
+}
+
+.header h1 {
+    font-size: 2.8rem;
+    margin-bottom: 15px;
+    font-weight: 800;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 1;
+}
+
+.header p {
+    font-size: 1.3rem;
+    opacity: 0.9;
+    max-width: 800px;
+    margin: 0 auto 25px;
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
+}
+
+.header-cta {
+    margin-top: 30px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Для мобильных */
+@media (max-width: 768px) {
+    .header {
+        padding: 40px 15px;
+    }
+    
+    .header h1 {
+        font-size: 2rem;
+    }
+    
+    .header p {
+        font-size: 1.1rem;
+    }
+}
